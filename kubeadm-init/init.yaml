@@ -33,7 +33,7 @@ etcd:
   local:
     dataDir: /var/lib/etcd
 imageRepository: kuops
-kubernetesVersion: v1.13.1
+kubernetesVersion: v1.13.4
 networking:
   dnsDomain: cluster.local
   podSubnet: 10.244.0.0/16
