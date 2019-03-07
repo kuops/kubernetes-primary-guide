@@ -67,7 +67,7 @@ Vagrant.configure("2") do |config|
     cat > /etc/docker/daemon.json <<-EOF
 	{
 	  "exec-opts": ["native.cgroupdriver=systemd"],
- 	  "registry-mirrors": ["https://registry.docker-cn.com"],
+	  "registry-mirrors": ["https://fz5yth0r.mirror.aliyuncs.com"],
 	  "log-driver": "json-file",
 	  "log-opts": {
 	  "max-size": "100m"
