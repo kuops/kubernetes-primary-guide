@@ -21,10 +21,6 @@ spec:
       containers:
       - name: podinfo
         image: stefanprodan/podinfo:1.4.2
-        command:
-          - ./podinfo
-          - -port=9898
-          - -debug=true
         ports:
         - containerPort: 9898
           protocol: TCP
