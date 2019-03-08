@@ -16,6 +16,7 @@ spec:
         app: podinfo
       annotations:
         prometheus.io/scrape: 'true'
+        prometheus.io/port: "9898"
     spec:
       containers:
       - name: podinfo
@@ -45,3 +46,17 @@ spec:
           requests:
             memory: "32Mi"
             cpu: "10m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: podinfo
+  labels:
+    app: podinfo
+spec:
+  selector:
+    app: prodinfo
+  type: NodePort
+  ports:
+    - port: 9898
+      targetPort: 9898
