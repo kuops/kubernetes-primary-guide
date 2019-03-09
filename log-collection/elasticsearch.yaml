@@ -1,0 +1,55 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: elasticsearch
+  name: elasticsearch
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: elasticsearch
+  template:
+    metadata:
+      labels:
+        app: elasticsearch
+    spec:
+       initContainers:
+      - image: alpine:3.6
+        command: ["/sbin/sysctl", "-w", "vm.max_map_count=262144"]
+        name: elasticsearch-init
+        securityContext:
+          privileged: true
+      containers:
+      - image: elasticsearch:6.6.1
+        imagePullPolicy: IfNotPresent
+        name: elasticsearch
+        env:
+        - name: discovery.type
+          value: single-node
+        ports:
+        - name: es
+          containerPort: 9200
+          protocol: TCP
+        - name: node
+          containerPort: 9300
+          protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: elasticsearch
+  name: elasticsearch
+spec:
+  ports:
+  - name: es
+    port: 9200
+    protocol: TCP
+    targetPort: 9200
+  - name: node
+    port: 9300
+    protocol: TCP
+    targetPort: 9300
+  selector:
+    app: elasticsearch
