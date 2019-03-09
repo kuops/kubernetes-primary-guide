@@ -9,4 +9,4 @@ spec:
     matchLabels:
       app: podinfo
   endpoints:
-  - port: 9898
+  - port: web
