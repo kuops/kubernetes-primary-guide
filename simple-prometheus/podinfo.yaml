@@ -54,7 +54,7 @@ metadata:
     app: podinfo
 spec:
   selector:
-    app: prodinfo
+    app: podinfo
   type: NodePort
   ports:
     - port: 9898
