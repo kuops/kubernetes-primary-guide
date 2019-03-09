@@ -59,4 +59,5 @@ spec:
   type: NodePort
   ports:
     - port: 9898
+      name: web
       targetPort: web
