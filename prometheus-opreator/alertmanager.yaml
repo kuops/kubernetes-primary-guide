@@ -33,4 +33,7 @@ spec:
   - name: ./example.rules
     rules:
     - alert: ExampleAlert
-      expr: vector(1)
+      annotations:
+        message: Errors 每分钟请求速率大于 1
+      expr: |
+        rate(http_requests_total[1m]) > 1
