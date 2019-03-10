@@ -13,25 +13,50 @@
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
+  name: frontend
+spec:
+  hosts:
+  - "*"
+  gateways:
+  - my-gateway
+  http:
+  - route:
+    - destination:
+        host: frontend
+        subset: prod
+    retries:
+      # 尝试请求 3 次
+      attempts: 3
+      # 每次等待 2 秒
+      perTryTimeout: 2s
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
   name: middleware
 spec:
   hosts:
   - middleware
   http:
-  - match:
-    - headers:
-        x-dev-user:
-          exact: super-secret
-    route:
-      - destination:
-          host: middleware
-          subset: canary
-    retries:
-      attempts: 3
-      perTryTimeout: 2s
   - route:
     - destination:
         host: middleware
+        subset: prod
+    retries:
+      attempts: 3
+      perTryTimeout: 2s
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: backend
+spec:
+  hosts:
+  - backend
+  http:
+  - route:
+    - destination:
+        host: backend
         subset: prod
     retries:
       attempts: 3
