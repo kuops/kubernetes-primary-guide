@@ -24,9 +24,6 @@ spec:
     - destination:
         host: frontend
         subset: prod
-    retries:
-      attempts: 3
-      perTryTimeout: 2s
 ---
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
@@ -40,9 +37,11 @@ spec:
     - destination:
         host: middleware
         subset: prod
-    retries:
-      attempts: 3
-      perTryTimeout: 2s
+      weight: 90
+    - destination:
+        host: middleware
+        subset: canary
+      weight: 10
 ---
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
@@ -56,6 +55,4 @@ spec:
     - destination:
         host: backend
         subset: prod
-    retries:
-      attempts: 3
-      perTryTimeout: 2s
+---
