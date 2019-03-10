@@ -17,6 +17,7 @@ metadata:
 spec:
   hosts:
   - worldclockapi.com
+  - dl-cdn.alpinelinux.org
   ports:
   - number: 80
     name: http
